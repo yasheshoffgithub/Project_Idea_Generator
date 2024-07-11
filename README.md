@@ -18,7 +18,7 @@ Ready to get those creative juices flowing? Let's get started:
 
 1. **Clone the Repository:**
    ```bash
-   git clone [Your repository link here]
+   git clone https://github.com/yasheshoffgithub/Project_Idea_Generator
 2. **Navigate to the Project Directory:**
    ```bash
    cd Gemini-Project-Idea-Generator
