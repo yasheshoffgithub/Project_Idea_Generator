@@ -1,0 +1,6 @@
+google-generativeai
+customtkinter
+python-dotenv
+pandas
+smtplib
+email.mime
