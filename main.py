@@ -29,7 +29,7 @@ def generate():
         model = genai.GenerativeModel('gemini-1.0-pro-latest')
         response = model.generate_content(prompt)
 
-        # Formatting the response
+        # Formatting the response to remove stars from title
         formatted_text = re.sub(r'\*\*(.*?)\*\*', r'\1', response.text)
         
         result.delete("1.0", ctk.END)  # Clear previous results
@@ -61,28 +61,28 @@ def open_feedback():
     feedback_window.title("Feedback")
     feedback_window.geometry("400x300")
     
-    Label(feedback_window, text="Name/Email:").pack(pady=10)
-    name_entry = Entry(feedback_window, width=40)
-    name_entry.pack(pady=5)
+    Label(feedback_window, text="Email:").pack(pady=10)
+    email_entry = Entry(feedback_window, width=40)
+    email_entry.pack(pady=5)
     
     Label(feedback_window, text="Feedback:").pack(pady=10)
     feedback_entry = Entry(feedback_window, width=40)
     feedback_entry.pack(pady=5)
     
     def submit_feedback():
-        name = name_entry.get()
+        email = email_entry.get()
         feedback = feedback_entry.get()
-        if name and feedback:
-            save_feedback(name, feedback)
+        if email and feedback:
+            save_feedback(email, feedback)
             feedback_window.destroy()
             messagebox.showinfo("Feedback Received", "Thank you for your feedback!")
         else:
-            messagebox.showwarning("Input Error", "Please provide both name/email and feedback.")
+            messagebox.showwarning("Input Error", "Please provide both email and feedback.")
     
     Button(feedback_window, text="Submit", command=submit_feedback).pack(pady=20)
 
-def save_feedback(name, feedback):
-    feedback_data = {'Name/Email': [name], 'Feedback': [feedback]}
+def save_feedback(email, feedback):
+    feedback_data = {'Email': [email], 'Feedback': [feedback]}
     feedback_df = pd.DataFrame(feedback_data)
     
     if os.path.exists("feedback.xlsx"):
@@ -104,8 +104,8 @@ def open_email_window():
         recipient_email = email_entry.get()
         if recipient_email:
             try:
-                sender_email = "yps123vasu@gmail.com"  # Replace with your Gmail address
-                sender_password = "rvax bwtu kdws gtwd"        # Replace with your Gmail app password
+                sender_email = os.environ.get("EMAIL_ID")  # Replace with your Gmail address
+                sender_password = os.environ.get("GMAIL_APP_PASSWORD")        # Replace with your Gmail app password
 
                 # Email content
                 subject = "Shared Project Ideas"
